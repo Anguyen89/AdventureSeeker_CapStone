@@ -53,9 +53,9 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 **Objective:** Functioning rails project with Authentication
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication
+- [X] create new project
+- [X] create `User` model
+- [X] authentication
 - [ ] user signup/signin pages
 - [ ] blank landing page after signin
 
@@ -68,7 +68,7 @@ the API.
 - [ ] seed the database with a small amount of test data
 - [ ] CRUD API for adventures (`AdventuresController`)
 - [ ] jBuilder views for notes
-- [ ] setup Webpack & Flux scaffold
+- [X] setup Webpack & Flux scaffold
 - [ ] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
 
