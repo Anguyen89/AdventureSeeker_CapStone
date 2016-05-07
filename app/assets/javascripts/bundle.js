@@ -54,6 +54,10 @@
 	    'Hello World'
 	  ), document.getElementByID('content'));
 	});
+	
+	// Roll out frontend login forms
+	//need userAction for login @ click on component
+	//userUtil to post a request to login
 
 /***/ },
 /* 1 */
