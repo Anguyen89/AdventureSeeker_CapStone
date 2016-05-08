@@ -15,6 +15,10 @@ var UserClientActions = {
     UserApiUtil.createUser(user);
   },
 
+  allUsers: function(){
+    UserApiUtil.receiveAllUsers();
+  }
+
 };
 
 module.exports = UserClientActions;

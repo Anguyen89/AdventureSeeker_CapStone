@@ -4,12 +4,12 @@ var UserConstants = require('../../constants/user_constants');
 
 var ServerActions = {
 
-  // receiveAllUsers: function(users){
-  //   AppDispatcher.dispatch({
-  //     actionType: UserConstants.RECEIVE_ALL_USERS,
-  //     users: users
-  //   });
-  // },
+  receiveAllUsers: function(users){
+    AppDispatcher.dispatch({
+      actionType: UserConstants.RECEIVE_ALL_USERS,
+      users: users
+    });
+  },
 
   receiveCurrentUser: function(user){
     AppDispatcher.dispatch({

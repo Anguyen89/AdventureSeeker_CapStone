@@ -25,26 +25,29 @@ var logoutUser = function(){
   UserStore.__emitChange();
 };
 
-// var updateAllUsers = function(users){
-//   if (users){
-//     _allUsers = users;
-//   }else{
-//     _allUsers = [];
-//   }
-// };
+var updateAllUsers = function(users){
+  if (users){
+    _allUsers = users;
+  }else{
+    _allUsers = [];
+  }
+};
 
-// UserStore.allUsers = function(){
-//   return _allUsers;
-// };
+UserStore.allUsers = function(){
+  return _allUsers;
+};
 
 
 UserStore.__onDispatch = function(payload){
   switch(payload.actionType){
     case(UserConstants.CURRENT_USER_RECEIVED):
-      updateCurrentUser(payload.user);
+      updateCurrentUser(payload.currentUser);
       break;
     case(UserConstants.LOGOUT_CURRENT_USER):
       logoutUser();
+      break;
+    case(UserConstants.RECEIVE_ALL_USERS):
+      updateAllUsers(payload.users);
       break;
 
   }
