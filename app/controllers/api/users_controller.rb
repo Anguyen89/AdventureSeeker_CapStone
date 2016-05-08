@@ -4,7 +4,7 @@ class Api::UsersController < ApplicationController
     @users = User.all
   end
 
-  
+
   def show
     @user = User.find_by(id: params[:id])
     #current_user put this back in
@@ -19,7 +19,7 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user
+    if @user.save!
       login(@user)
       render :show
     else

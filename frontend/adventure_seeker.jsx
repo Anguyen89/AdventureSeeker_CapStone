@@ -2,9 +2,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 UserApiUtil = require('./util/user_api_util');
 UserStore = require('./stores/user_store');
-var UserLogin = require('./components/user/user_login');
+var UserSignUp = require('./components/user/user_signup');
 document.addEventListener("DOMContentLoaded", function(){
-  ReactDOM.render(<UserLogin />, document.getElementById('content'));
+  ReactDOM.render(<UserSignUp />, document.getElementById('content'));
 });
 
 

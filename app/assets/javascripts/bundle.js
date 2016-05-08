@@ -48,9 +48,9 @@
 	var ReactDOM = __webpack_require__(33);
 	UserApiUtil = __webpack_require__(193);
 	UserStore = __webpack_require__(169);
-	var UserLogin = __webpack_require__(168);
+	var UserSignUp = __webpack_require__(195);
 	document.addEventListener("DOMContentLoaded", function () {
-	  ReactDOM.render(React.createElement(UserLogin, null), document.getElementById('content'));
+	  ReactDOM.render(React.createElement(UserSignUp, null), document.getElementById('content'));
 	});
 	
 	// Roll out frontend login forms
@@ -20152,61 +20152,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var UserClientActions = __webpack_require__(192);
-	var UserStore = __webpack_require__(169);
-	
-	var UserLoginForm = React.createClass({
-	  displayName: 'UserLoginForm',
-	
-	
-	  getInitialState: function () {
-	    return { username: "", password: "" };
-	  },
-	
-	  usernameChange: function (e) {
-	    this.setState({ username: e.target.value });
-	  },
-	
-	  passwordChange: function (e) {
-	    this.setState({ password: e.target.value });
-	  },
-	
-	  handleSubmit: function (event) {
-	    event.preventDefault();
-	    var user = {
-	      username: this.state.username,
-	      password: this.state.password
-	    };
-	    UserClientActions.login(user);
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Login Form'
-	      ),
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        React.createElement('input', { type: 'text', value: this.state.username, onChange: this.usernameChange }),
-	        React.createElement('input', { type: 'text', value: this.state.password, onChange: this.passwordChange }),
-	        React.createElement('input', { type: 'submit', value: 'Login' })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = UserLoginForm;
-
-/***/ },
+/* 168 */,
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -27055,6 +27001,7 @@
 	  },
 	
 	  createUser: function (user) {
+	    console.log("inside create");
 	    UserApiUtil.createUser(user);
 	  },
 	
@@ -27155,6 +27102,60 @@
 	};
 	
 	module.exports = ServerActions;
+
+/***/ },
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ClientActions = __webpack_require__(192);
+	var UserStore = __webpack_require__(169);
+	
+	var UserSignUp = React.createClass({
+	  displayName: 'UserSignUp',
+	
+	  getInitialState: function () {
+	    return { username: "", password: "" };
+	  },
+	
+	  handleSubmit: function (event) {
+	    event.preventDefault();
+	    var user = {
+	      username: this.state.username,
+	      password: this.state.password
+	    };
+	    ClientActions.createUser(user);
+	  },
+	
+	  usernameChange: function (event) {
+	    this.setState({ username: event.target.value });
+	  },
+	
+	  passwordChange: function (event) {
+	    this.setState({ password: event.target.value });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Sign Up'
+	      ),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement('input', { type: 'text', value: this.state.username, onChange: this.usernameChange }),
+	        React.createElement('input', { type: 'text', value: this.state.password, onChange: this.passwordChange }),
+	        React.createElement('input', { type: 'submit', value: 'Submit' })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = UserSignUp;
 
 /***/ }
 /******/ ]);
