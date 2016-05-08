@@ -44,20 +44,28 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var react = __webpack_require__(1);
+	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
+	// UserApiUtil = require('./util/user_api_util');
+	// UserStore = require('./stores/user_store');
 	
 	document.addEventListener("DOMContentLoaded", function () {
 	  ReactDOM.render(React.createElement(
 	    'div',
 	    null,
 	    'Hello World'
-	  ), document.getElementByID('content'));
+	  ), document.getElementById('content'));
 	});
 	
 	// Roll out frontend login forms
 	//need userAction for login @ click on component
 	//userUtil to post a request to login
+
+	// implemented flux Architecture for user model
+	// - created the server and client actions for logins
+	// - created util and store actions for login
+	//
+	// --WIll need to implement the login forms.
 
 /***/ },
 /* 1 */
