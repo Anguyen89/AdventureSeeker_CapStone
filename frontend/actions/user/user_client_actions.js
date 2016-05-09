@@ -12,7 +12,6 @@ var UserClientActions = {
   },
 
   createUser: function(user){
-    console.log("inside create");
     UserApiUtil.createUser(user);
   },
 

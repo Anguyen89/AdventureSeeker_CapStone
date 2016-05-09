@@ -1,10 +1,25 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+
+var ReactRouter = require('react-router');
+var Route = ReactRouter.Route;
+var Router = ReactRouter.Router;
+var IndexRoute = ReactRouter.IndexRoute;
+var hashHistory = ReactRouter.hashHistory;
+
+// var App = require('./components/app');
 UserApiUtil = require('./util/user_api_util');
 UserStore = require('./stores/user_store');
 var UserSignUp = require('./components/user/user_signup');
+
+
+var router = (
+  <Route path="/" component={UserSignUp}></Route>
+);
+
+
 document.addEventListener("DOMContentLoaded", function(){
-  ReactDOM.render(<UserSignUp />, document.getElementById('content'));
+  ReactDOM.render(<Router history={hashHistory} routes={router} />, document.getElementById('content'));
 });
 
 

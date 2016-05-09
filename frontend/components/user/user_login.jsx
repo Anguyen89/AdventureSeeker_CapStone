@@ -26,6 +26,7 @@ var UserLoginForm = React.createClass({
     UserClientActions.login(user);
   },
 
+
   render: function(){
     return (
       <div>

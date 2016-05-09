@@ -56,7 +56,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 - [X] create new project
 - [X] create `User` model
 - [X] authentication
-- [ ] user signup/signin pages
+- [X] user signup/signin pages
 - [ ] blank landing page after signin
 
 ### Phase 2: Flux Architecture and Profile CRUD and Profile Frontend (1.5 days)
@@ -67,7 +67,7 @@ the API.
 - [ ] create 'Profile' model
 - [ ] seed the database with a small amount of test data
 - [ ] CRUD API for adventures (`AdventuresController`)
-- [ ] jBuilder views for notes
+- [ ] jBuilder views for Adventures and profiles
 - [X] setup Webpack & Flux scaffold
 - [ ] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
