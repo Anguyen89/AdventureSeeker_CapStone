@@ -63,7 +63,7 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 **Objective:** Adventures can be created, read, edited and destroyed through
 the API.
 
-- [ ] create `Adventure` model
+- [X] create `Adventure` model
 - [ ] create 'Profile' model
 - [ ] seed the database with a small amount of test data
 - [ ] CRUD API for adventures (`AdventuresController`)
