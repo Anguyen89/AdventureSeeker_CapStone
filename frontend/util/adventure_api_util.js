@@ -11,6 +11,26 @@ var AdventureAppUtil = {
         AdventureServerActions.receiveAllAdventures(adventures);
       }
     });
+  },
+
+  createAdventure: function(adventure){
+    $.ajax({
+      type: 'POST',
+      url: 'api/adventures',
+      success: function(){
+        AdventureServerActions.receiveOneAdventure(adventure);
+      }
+    });
+  },
+
+  removeAdventure: function(adventure){
+    $.ajax({
+      type: 'DELETE',
+      url: 'api/adventures/' + adventure.id,
+      success: function(){
+        AdventureServerActions.removeAdventure(adventure);
+      }
+    });
   }
 };
 

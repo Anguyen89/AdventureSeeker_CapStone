@@ -32682,6 +32682,26 @@
 	        AdventureServerActions.receiveAllAdventures(adventures);
 	      }
 	    });
+	  },
+	
+	  createAdventure: function (adventure) {
+	    $.ajax({
+	      type: 'POST',
+	      url: 'api/adventures',
+	      success: function () {
+	        AdventureServerActions.receiveOneAdventure(adventure);
+	      }
+	    });
+	  },
+	
+	  removeAdventure: function (adventure) {
+	    $.ajax({
+	      type: 'DELETE',
+	      url: 'api/adventures/' + adventure.id,
+	      success: function () {
+	        AdventureServerActions.removeAdventure(adventure);
+	      }
+	    });
 	  }
 	};
 	
@@ -32701,7 +32721,22 @@
 	      actionType: AdventureConstants.RECEIVE_ALL_ADVENTURES,
 	      adventures: adventures
 	    });
+	  },
+	
+	  receiveOneAdventure: function (adventure) {
+	    Dispatcher.dispatch({
+	      actionType: AdventureConstants.RECEIVE_ONE_ADVENTURE,
+	      adventure: adventure
+	    });
+	  },
+	
+	  removeAdventure: function (adventure) {
+	    Dispatcher.dispatch({
+	      actionType: AdventureConstants.REMOVE_ADVENTURE,
+	      adventure: adventure
+	    });
 	  }
+	
 	};
 	
 	module.exports = AdventureServerActions;
@@ -32712,7 +32747,9 @@
 
 	
 	var AdventureConstants = {
-	  RECEIVE_ALL_ADVENTURES: 'RECEIVE_ALL_ADVENTURES'
+	  RECEIVE_ALL_ADVENTURES: 'RECEIVE_ALL_ADVENTURES',
+	  RECEIVE_ONE_ADVENTURE: 'RECEIVE_ONE_ADVENTURE',
+	  REMOVE_ADVENTURE: 'REMOVE_ADVENTURE'
 	};
 
 /***/ },
@@ -32736,6 +32773,16 @@
 	  AdventureStore.__emitChange();
 	};
 	
+	var addAdventure = function (adventure) {
+	  _adventures[adventure.id] = adventure;
+	  AdventureStore.__emitChange();
+	};
+	
+	var removeAdventure = function (adventure) {
+	  delete _adventures[adventure.id];
+	  AdventureStore.__emitChange();
+	};
+	
 	AdventureStore.all = function () {
 	  var allAdventures = [];
 	  Object.keys(_adventures).forEach(function (key) {
@@ -32748,6 +32795,12 @@
 	  switch (payload.actionType) {
 	    case AdventureConstants.RECEIVE_ALL_ADVENTURES:
 	      resetAdventures(payload.adventures);
+	      break;
+	    case AdventureConstants.RECEIVE_ONE_ADVENTURE:
+	      addAdventure(payload.adventure);
+	      break;
+	    case AdventureConstants.REMOVE_ADVENTURE:
+	      removeAdventure(payload.adventure);
 	      break;
 	  }
 	};

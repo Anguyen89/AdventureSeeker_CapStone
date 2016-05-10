@@ -16,6 +16,16 @@ var resetAdventures = function(adventures){
 
 };
 
+var addAdventure = function(adventure){
+  _adventures[adventure.id] = adventure;
+  AdventureStore.__emitChange();
+};
+
+var removeAdventure = function(adventure){
+  delete _adventures[adventure.id];
+  AdventureStore.__emitChange();
+};
+
 
 AdventureStore.all = function(){
   var allAdventures = [];
@@ -29,6 +39,12 @@ AdventureStore.__onDispatch = function(payload){
   switch(payload.actionType){
     case(AdventureConstants.RECEIVE_ALL_ADVENTURES):
     resetAdventures(payload.adventures);
+    break;
+    case(AdventureConstants.RECEIVE_ONE_ADVENTURE):
+    addAdventure(payload.adventure);
+    break;
+    case(AdventureConstants.REMOVE_ADVENTURE):
+    removeAdventure(payload.adventure);
     break;
   }
 };
