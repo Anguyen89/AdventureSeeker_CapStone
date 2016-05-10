@@ -64,10 +64,10 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 the API.
 
 - [X] create `Adventure` model
-- [ ] create 'Profile' model
-- [ ] seed the database with a small amount of test data
-- [ ] CRUD API for adventures (`AdventuresController`)
-- [ ] jBuilder views for Adventures and profiles
+<!-- - [ ] create 'Profile' model -->
+- [X] seed the database with a small amount of test data
+- [X] CRUD API for adventures (`AdventuresController`)
+- [X] jBuilder views for Adventures
 - [X] setup Webpack & Flux scaffold
 - [ ] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
