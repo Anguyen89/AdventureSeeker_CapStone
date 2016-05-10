@@ -2,7 +2,7 @@ var AppDispatcher = require('../../dispatcher/dispatcher');
 var UserConstants = require('../../constants/user_constants');
 
 
-var ServerActions = {
+var UserServerActions = {
 
   receiveAllUsers: function(users){
     AppDispatcher.dispatch({
@@ -28,4 +28,4 @@ var ServerActions = {
 };
 
 
-module.exports = ServerActions;
+module.exports = UserServerActions;

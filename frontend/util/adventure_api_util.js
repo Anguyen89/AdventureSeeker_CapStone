@@ -1,15 +1,18 @@
 var AdventureServerActions = require('../actions/adventures/adventure_server_action');
 
 
-module.exports = {
+var AdventureAppUtil = {
 
-  fetchAdvenutures: function(){
+  fetchAdventures: function(){
     $.ajax({
       type: 'GET',
       url: 'api/adventures',
       success: function(adventures){
-        AdventureServerActions.receiveAdventures(adventures);
+        AdventureServerActions.receiveAllAdventures(adventures);
       }
     });
   }
 };
+
+
+module.exports = AdventureAppUtil;

@@ -54,8 +54,8 @@
 	var hashHistory = ReactRouter.hashHistory;
 	
 	// var App = require('./components/app');
-	UserApiUtil = __webpack_require__(229);
-	UserStore = __webpack_require__(236);
+	AdventureApiUtil = __webpack_require__(256);
+	AdventureStore = __webpack_require__(259);
 	var UserSignUp = __webpack_require__(254);
 	
 	var router = React.createElement(Route, { path: '/', component: UserSignUp });
@@ -25726,7 +25726,7 @@
 	var AppDispatcher = __webpack_require__(231);
 	var UserConstants = __webpack_require__(235);
 	
-	var ServerActions = {
+	var UserServerActions = {
 	
 	  receiveAllUsers: function (users) {
 	    AppDispatcher.dispatch({
@@ -25750,7 +25750,7 @@
 	
 	};
 	
-	module.exports = ServerActions;
+	module.exports = UserServerActions;
 
 /***/ },
 /* 231 */
@@ -32665,6 +32665,94 @@
 	};
 	
 	module.exports = UserClientActions;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AdventureServerActions = __webpack_require__(257);
+	
+	var AdventureAppUtil = {
+	
+	  fetchAdventures: function () {
+	    $.ajax({
+	      type: 'GET',
+	      url: 'api/adventures',
+	      success: function (adventures) {
+	        AdventureServerActions.receiveAllAdventures(adventures);
+	      }
+	    });
+	  }
+	};
+	
+	module.exports = AdventureAppUtil;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(231);
+	var AdventureConstants = __webpack_require__(258);
+	
+	var AdventureServerActions = {
+	
+	  receiveAllAdventures: function (adventures) {
+	    Dispatcher.dispatch({
+	      actionType: AdventureConstants.RECEIVE_ALL_ADVENTURES,
+	      adventures: adventures
+	    });
+	  }
+	};
+	
+	module.exports = AdventureServerActions;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports) {
+
+	
+	var AdventureConstants = {
+	  RECEIVE_ALL_ADVENTURES: 'RECEIVE_ALL_ADVENTURES'
+	};
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(237).Store;
+	var AppDispatcher = __webpack_require__(231);
+	var AdventureConstants = __webpack_require__(258);
+	
+	var AdventureStore = new Store(AppDispatcher);
+	
+	var _adventures = {};
+	
+	var resetAdventures = function (adventures) {
+	  _adventures = {};
+	  adventures.forEach(function (adventure) {
+	    _adventures[adventure.id] = adventure;
+	  });
+	  // console.log(_adventures);
+	  AdventureStore.__emitChange();
+	};
+	
+	AdventureStore.all = function () {
+	  var allAdventures = [];
+	  Object.keys(_adventures).forEach(function (key) {
+	    allAdventures.push(_adventures[key]);
+	  });
+	  return allAdventures;
+	};
+	
+	AdventureStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case AdventureConstants.RECEIVE_ALL_ADVENTURES:
+	      resetAdventures(payload.adventures);
+	      break;
+	  }
+	};
+	
+	module.exports = AdventureStore;
 
 /***/ }
 /******/ ]);

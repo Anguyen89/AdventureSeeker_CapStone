@@ -8,8 +8,8 @@ var IndexRoute = ReactRouter.IndexRoute;
 var hashHistory = ReactRouter.hashHistory;
 
 // var App = require('./components/app');
-UserApiUtil = require('./util/user_api_util');
-UserStore = require('./stores/user_store');
+AdventureApiUtil = require('./util/adventure_api_util');
+AdventureStore = require('./stores/adventure_store');
 var UserSignUp = require('./components/user/user_signup');
 
 

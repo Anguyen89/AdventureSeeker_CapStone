@@ -1,4 +1,4 @@
-json.array! @adventures, :user_id, :title, :location, :description, :lng, :lat
+json.array! @adventures, :id, :user_id, :title, :location, :description, :lng, :lat
 
 #  id          :integer          not null, primary key
 #  user_id     :integer          not null
