@@ -8,13 +8,27 @@ var IndexRoute = ReactRouter.IndexRoute;
 var hashHistory = ReactRouter.hashHistory;
 
 // var App = require('./components/app');
-AdventureApiUtil = require('./util/adventure_api_util');
-AdventureStore = require('./stores/adventure_store');
+// AdventureApiUtil = require('./util/adventure_api_util');
+// AdventureStore = require('./stores/adventure_store');
 var UserSignUp = require('./components/user/user_signup');
+var AdventureIndex = require('./components/adventure/adventureIndex');
 
+var App = React.createClass({
+  render: function(){
+    return (
+    <div>
+      <h3>HEllo from App</h3>
+      {this.props.children}
+    </div>
+    );
+  }
+});
 
 var router = (
-  <Route path="/" component={UserSignUp}></Route>
+  <Route path="/" component={App}>
+    <IndexRoute component={AdventureIndex} />
+    <Route />
+  </Route>
 );
 
 

@@ -54,11 +54,34 @@
 	var hashHistory = ReactRouter.hashHistory;
 	
 	// var App = require('./components/app');
-	AdventureApiUtil = __webpack_require__(256);
-	AdventureStore = __webpack_require__(259);
-	var UserSignUp = __webpack_require__(254);
+	// AdventureApiUtil = require('./util/adventure_api_util');
+	// AdventureStore = require('./stores/adventure_store');
+	var UserSignUp = __webpack_require__(229);
+	var AdventureIndex = __webpack_require__(256);
 	
-	var router = React.createElement(Route, { path: '/', component: UserSignUp });
+	var App = React.createClass({
+	  displayName: 'App',
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h3',
+	        null,
+	        'HEllo from App'
+	      ),
+	      this.props.children
+	    );
+	  }
+	});
+	
+	var router = React.createElement(
+	  Route,
+	  { path: '/', component: App },
+	  React.createElement(IndexRoute, { component: AdventureIndex }),
+	  React.createElement(Route, null)
+	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
 	  ReactDOM.render(React.createElement(Router, { history: hashHistory, routes: router }), document.getElementById('content'));
@@ -25666,7 +25689,94 @@
 /* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var UserServerActions = __webpack_require__(230);
+	var React = __webpack_require__(1);
+	var ClientActions = __webpack_require__(230);
+	var UserStore = __webpack_require__(238);
+	
+	var UserSignUp = React.createClass({
+	  displayName: 'UserSignUp',
+	
+	  getInitialState: function () {
+	    return { username: "", password: "" };
+	  },
+	
+	  handleSubmit: function (event) {
+	    event.preventDefault();
+	    var user = {
+	      username: this.state.username,
+	      password: this.state.password
+	    };
+	    ClientActions.createUser(user);
+	  },
+	
+	  usernameChange: function (event) {
+	    this.setState({ username: event.target.value });
+	  },
+	
+	  passwordChange: function (event) {
+	    this.setState({ password: event.target.value });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'sign_up_form' },
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'h3',
+	          { className: 'sign_up' },
+	          'Sign Up'
+	        ),
+	        React.createElement('br', null),
+	        'Username',
+	        React.createElement('input', { type: 'text', value: this.state.username, onChange: this.usernameChange }),
+	        React.createElement('br', null),
+	        'Password',
+	        React.createElement('input', { type: 'text', value: this.state.password, onChange: this.passwordChange }),
+	        React.createElement('input', { type: 'submit', value: 'Sign Up' })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = UserSignUp;
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var UserApiUtil = __webpack_require__(231);
+	
+	var UserClientActions = {
+	
+	  login: function (user) {
+	    UserApiUtil.login(user);
+	  },
+	
+	  logout: function () {
+	    UserApiUtil.logout();
+	  },
+	
+	  createUser: function (user) {
+	    UserApiUtil.createUser(user);
+	  },
+	
+	  allUsers: function () {
+	    UserApiUtil.receiveAllUsers();
+	  }
+	
+	};
+	
+	module.exports = UserClientActions;
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var UserServerActions = __webpack_require__(232);
 	
 	var UserApiUtil = {
 	
@@ -25720,11 +25830,11 @@
 	module.exports = UserApiUtil;
 
 /***/ },
-/* 230 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(231);
-	var UserConstants = __webpack_require__(235);
+	var AppDispatcher = __webpack_require__(233);
+	var UserConstants = __webpack_require__(237);
 	
 	var UserServerActions = {
 	
@@ -25753,14 +25863,14 @@
 	module.exports = UserServerActions;
 
 /***/ },
-/* 231 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(232).Dispatcher;
+	var Dispatcher = __webpack_require__(234).Dispatcher;
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 232 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25772,11 +25882,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(233);
+	module.exports.Dispatcher = __webpack_require__(235);
 
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25798,7 +25908,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(234);
+	var invariant = __webpack_require__(236);
 	
 	var _prefix = 'ID_';
 	
@@ -26013,7 +26123,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26068,7 +26178,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports) {
 
 	
@@ -26081,12 +26191,12 @@
 	module.exports = UserConstants;
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(237).Store;
-	var AppDispatcher = __webpack_require__(231);
-	var UserConstants = __webpack_require__(235);
+	var Store = __webpack_require__(239).Store;
+	var AppDispatcher = __webpack_require__(233);
+	var UserConstants = __webpack_require__(237);
 	
 	var UserStore = new Store(AppDispatcher);
 	
@@ -26141,7 +26251,7 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26153,15 +26263,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(238);
-	module.exports.MapStore = __webpack_require__(241);
-	module.exports.Mixin = __webpack_require__(253);
-	module.exports.ReduceStore = __webpack_require__(242);
-	module.exports.Store = __webpack_require__(243);
+	module.exports.Container = __webpack_require__(240);
+	module.exports.MapStore = __webpack_require__(243);
+	module.exports.Mixin = __webpack_require__(255);
+	module.exports.ReduceStore = __webpack_require__(244);
+	module.exports.Store = __webpack_require__(245);
 
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26183,10 +26293,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(239);
+	var FluxStoreGroup = __webpack_require__(241);
 	
-	var invariant = __webpack_require__(234);
-	var shallowEqual = __webpack_require__(240);
+	var invariant = __webpack_require__(236);
+	var shallowEqual = __webpack_require__(242);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -26344,7 +26454,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26363,7 +26473,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(234);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -26425,7 +26535,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports) {
 
 	/**
@@ -26480,7 +26590,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26501,10 +26611,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(242);
-	var Immutable = __webpack_require__(252);
+	var FluxReduceStore = __webpack_require__(244);
+	var Immutable = __webpack_require__(254);
 	
-	var invariant = __webpack_require__(234);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -26630,7 +26740,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26651,10 +26761,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(243);
+	var FluxStore = __webpack_require__(245);
 	
-	var abstractMethod = __webpack_require__(251);
-	var invariant = __webpack_require__(234);
+	var abstractMethod = __webpack_require__(253);
+	var invariant = __webpack_require__(236);
 	
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -26737,7 +26847,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26756,11 +26866,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(244);
+	var _require = __webpack_require__(246);
 	
 	var EventEmitter = _require.EventEmitter;
 	
-	var invariant = __webpack_require__(234);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -26920,7 +27030,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26933,14 +27043,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(245)
+	  EventEmitter: __webpack_require__(247)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26959,11 +27069,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(246);
-	var EventSubscriptionVendor = __webpack_require__(248);
+	var EmitterSubscription = __webpack_require__(248);
+	var EventSubscriptionVendor = __webpack_require__(250);
 	
-	var emptyFunction = __webpack_require__(250);
-	var invariant = __webpack_require__(249);
+	var emptyFunction = __webpack_require__(252);
+	var invariant = __webpack_require__(251);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -27137,7 +27247,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27158,7 +27268,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(247);
+	var EventSubscription = __webpack_require__(249);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -27190,7 +27300,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports) {
 
 	/**
@@ -27244,7 +27354,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27263,7 +27373,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(249);
+	var invariant = __webpack_require__(251);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -27353,7 +27463,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27408,7 +27518,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports) {
 
 	/**
@@ -27450,7 +27560,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27467,7 +27577,7 @@
 	
 	'use strict';
 	
-	var invariant = __webpack_require__(234);
+	var invariant = __webpack_require__(236);
 	
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -27477,7 +27587,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32461,7 +32571,7 @@
 	}));
 
 /***/ },
-/* 253 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -32478,9 +32588,9 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(239);
+	var FluxStoreGroup = __webpack_require__(241);
 	
-	var invariant = __webpack_require__(234);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
@@ -32584,180 +32694,63 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 254 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ClientActions = __webpack_require__(255);
-	var UserStore = __webpack_require__(236);
+	var AdventureStore = __webpack_require__(257);
+	var UserStore = __webpack_require__(238);
+	var AdventureClientAction = __webpack_require__(259);
 	
-	var UserSignUp = React.createClass({
-	  displayName: 'UserSignUp',
+	var AdventureIndexItem = __webpack_require__(262);
+	
+	var AdventureIndex = React.createClass({
+	  displayName: 'AdventureIndex',
+	
 	
 	  getInitialState: function () {
-	    return { username: "", password: "" };
+	    return { adventures: AdventureStore.all() };
 	  },
 	
-	  handleSubmit: function (event) {
-	    event.preventDefault();
-	    var user = {
-	      username: this.state.username,
-	      password: this.state.password
-	    };
-	    ClientActions.createUser(user);
+	  componentDidMount: function () {
+	    this.adventureListener = AdventureStore.addListener(this.__onChange);
+	    // this.userListener = UserStore.addListener(this.__onChange);
+	    AdventureClientAction.fetchAdventures();
 	  },
 	
-	  usernameChange: function (event) {
-	    this.setState({ username: event.target.value });
+	  componentWillUnmount: function () {
+	    this.adventureListener.remove();
 	  },
 	
-	  passwordChange: function (event) {
-	    this.setState({ password: event.target.value });
+	  __onChange: function () {
+	    this.setState({ adventures: AdventureStore.all() });
 	  },
 	
 	  render: function () {
+	    var _adventures = this.state.adventures.map(function (adventure) {
+	      return React.createElement(AdventureIndexItem, { adventure: adventure, key: adventure.id });
+	    });
+	
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(
-	        'h3',
+	        'ul',
 	        null,
-	        'Sign Up'
-	      ),
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        React.createElement('input', { type: 'text', value: this.state.username, onChange: this.usernameChange }),
-	        React.createElement('input', { type: 'text', value: this.state.password, onChange: this.passwordChange }),
-	        React.createElement('input', { type: 'submit', value: 'Submit' })
+	        _adventures
 	      )
 	    );
 	  }
 	});
 	
-	module.exports = UserSignUp;
-
-/***/ },
-/* 255 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var UserApiUtil = __webpack_require__(229);
-	
-	var UserClientActions = {
-	
-	  login: function (user) {
-	    UserApiUtil.login(user);
-	  },
-	
-	  logout: function () {
-	    UserApiUtil.logout();
-	  },
-	
-	  createUser: function (user) {
-	    UserApiUtil.createUser(user);
-	  },
-	
-	  allUsers: function () {
-	    UserApiUtil.receiveAllUsers();
-	  }
-	
-	};
-	
-	module.exports = UserClientActions;
-
-/***/ },
-/* 256 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AdventureServerActions = __webpack_require__(257);
-	
-	var AdventureAppUtil = {
-	
-	  fetchAdventures: function () {
-	    $.ajax({
-	      type: 'GET',
-	      url: 'api/adventures',
-	      success: function (adventures) {
-	        AdventureServerActions.receiveAllAdventures(adventures);
-	      }
-	    });
-	  },
-	
-	  createAdventure: function (adventure) {
-	    $.ajax({
-	      type: 'POST',
-	      url: 'api/adventures',
-	      success: function () {
-	        AdventureServerActions.receiveOneAdventure(adventure);
-	      }
-	    });
-	  },
-	
-	  removeAdventure: function (adventure) {
-	    $.ajax({
-	      type: 'DELETE',
-	      url: 'api/adventures/' + adventure.id,
-	      success: function () {
-	        AdventureServerActions.removeAdventure(adventure);
-	      }
-	    });
-	  }
-	};
-	
-	module.exports = AdventureAppUtil;
+	module.exports = AdventureIndex;
 
 /***/ },
 /* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(231);
-	var AdventureConstants = __webpack_require__(258);
-	
-	var AdventureServerActions = {
-	
-	  receiveAllAdventures: function (adventures) {
-	    Dispatcher.dispatch({
-	      actionType: AdventureConstants.RECEIVE_ALL_ADVENTURES,
-	      adventures: adventures
-	    });
-	  },
-	
-	  receiveOneAdventure: function (adventure) {
-	    Dispatcher.dispatch({
-	      actionType: AdventureConstants.RECEIVE_ONE_ADVENTURE,
-	      adventure: adventure
-	    });
-	  },
-	
-	  removeAdventure: function (adventure) {
-	    Dispatcher.dispatch({
-	      actionType: AdventureConstants.REMOVE_ADVENTURE,
-	      adventure: adventure
-	    });
-	  }
-	
-	};
-	
-	module.exports = AdventureServerActions;
-
-/***/ },
-/* 258 */
-/***/ function(module, exports) {
-
-	
-	var AdventureConstants = {
-	  RECEIVE_ALL_ADVENTURES: 'RECEIVE_ALL_ADVENTURES',
-	  RECEIVE_ONE_ADVENTURE: 'RECEIVE_ONE_ADVENTURE',
-	  REMOVE_ADVENTURE: 'REMOVE_ADVENTURE'
-	};
-
-/***/ },
-/* 259 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(237).Store;
-	var AppDispatcher = __webpack_require__(231);
+	var Store = __webpack_require__(239).Store;
+	var AppDispatcher = __webpack_require__(233);
 	var AdventureConstants = __webpack_require__(258);
 	
 	var AdventureStore = new Store(AppDispatcher);
@@ -32806,6 +32799,149 @@
 	};
 	
 	module.exports = AdventureStore;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports) {
+
+	
+	var AdventureConstants = {
+	  RECEIVE_ALL_ADVENTURES: 'RECEIVE_ALL_ADVENTURES',
+	  RECEIVE_ONE_ADVENTURE: 'RECEIVE_ONE_ADVENTURE',
+	  REMOVE_ADVENTURE: 'REMOVE_ADVENTURE'
+	};
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AdventureAppUtil = __webpack_require__(260);
+	
+	var AdventureClientAction = {
+	
+	  fetchAdventures: function () {
+	    AdventureAppUtil.fetchAdventures();
+	  },
+	
+	  createAdventure: function (adventure) {
+	    AdventureAppUtil.createAdventure(adventure);
+	  },
+	
+	  destroyAdventure: function (adventure) {
+	    AdventureAppUtil.removeAdventure(adventure);
+	  }
+	};
+	
+	module.exports = AdventureClientAction;
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AdventureServerActions = __webpack_require__(261);
+	
+	var AdventureAppUtil = {
+	
+	  fetchAdventures: function () {
+	    $.ajax({
+	      type: 'GET',
+	      url: 'api/adventures',
+	      success: function (adventures) {
+	        AdventureServerActions.receiveAllAdventures(adventures);
+	      }
+	    });
+	  },
+	
+	  createAdventure: function (adventure) {
+	    $.ajax({
+	      type: 'POST',
+	      url: 'api/adventures',
+	      success: function () {
+	        AdventureServerActions.receiveOneAdventure(adventure);
+	      }
+	    });
+	  },
+	
+	  removeAdventure: function (adventure) {
+	    $.ajax({
+	      type: 'DELETE',
+	      url: 'api/adventures/' + adventure.id,
+	      success: function () {
+	        AdventureServerActions.removeAdventure(adventure);
+	      }
+	    });
+	  }
+	};
+	
+	module.exports = AdventureAppUtil;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(233);
+	var AdventureConstants = __webpack_require__(258);
+	
+	var AdventureServerActions = {
+	
+	  receiveAllAdventures: function (adventures) {
+	    Dispatcher.dispatch({
+	      actionType: AdventureConstants.RECEIVE_ALL_ADVENTURES,
+	      adventures: adventures
+	    });
+	  },
+	
+	  receiveOneAdventure: function (adventure) {
+	    Dispatcher.dispatch({
+	      actionType: AdventureConstants.RECEIVE_ONE_ADVENTURE,
+	      adventure: adventure
+	    });
+	  },
+	
+	  removeAdventure: function (adventure) {
+	    Dispatcher.dispatch({
+	      actionType: AdventureConstants.REMOVE_ADVENTURE,
+	      adventure: adventure
+	    });
+	  }
+	
+	};
+	
+	module.exports = AdventureServerActions;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var AdventureIndexItem = React.createClass({
+	  displayName: "AdventureIndexItem",
+	
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "ul",
+	        null,
+	        React.createElement(
+	          "li",
+	          { className: "adventure_title" },
+	          this.props.adventure.title
+	        ),
+	        React.createElement(
+	          "li",
+	          { className: "adventure_description" },
+	          this.props.adventure.description
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = AdventureIndexItem;
 
 /***/ }
 /******/ ]);

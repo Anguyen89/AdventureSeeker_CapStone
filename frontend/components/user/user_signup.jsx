@@ -26,12 +26,16 @@ var UserSignUp = React.createClass({
 
   render: function(){
     return(
-      <div>
-        <h3>Sign Up</h3>
+      <div className="sign_up_form">
         <form onSubmit={this.handleSubmit}>
+          <h3 className="sign_up">Sign Up</h3>
+          <br></br>
+          Username
           <input type="text" value={this.state.username} onChange={this.usernameChange}/>
+          <br></br>
+          Password
           <input type='text' value={this.state.password} onChange={this.passwordChange} />
-          <input type="submit" value="Submit"/>
+          <input type="submit" value="Sign Up"/>
         </form>
 
       </div>

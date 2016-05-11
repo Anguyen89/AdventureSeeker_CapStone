@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+
+
+
+
+.sign_up_form{
+  display: flex;
+  justify-content: center;
+  font-style: italic;
+  align-items: center;
+}
+
+.sign_up{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*div {
+  background-color: lightblue;
+}*/

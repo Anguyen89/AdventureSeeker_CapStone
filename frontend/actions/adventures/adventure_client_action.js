@@ -15,3 +15,6 @@ var AdventureClientAction = {
     AdventureAppUtil.removeAdventure(adventure);
   }
 };
+
+
+module.exports = AdventureClientAction;

@@ -109,7 +109,7 @@ user interface.
 - [ ] adding Bookings requires a Adventure
 - [ ] view Bookings as User
 
-### Phase 7: Messages (1 day)
+<!-- ### Phase 7: Messages (1 day)
 
 **Objective:** Messages belong to User, and can be viewed by User.
 
@@ -118,7 +118,7 @@ user interface.
 - [ ] Adventure CRUD
 - [ ] adding Messages requires a User
 - [ ] viewing Messages by User
-- Use CSS to style new views
+- Use CSS to style new views -->
 
 
 ### Phase 8: Start Styling (0.5 days)
